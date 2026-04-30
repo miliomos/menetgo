@@ -25,6 +25,8 @@ export async function downloadFeed(key) {
   const feed = FEEDS[key];
   if (!feed) throw new Error(`Unknown feed: ${key}`);
 
+  fs.mkdirSync(CACHE_DIR, { recursive: true });
+
   const zipPath = path.join(CACHE_DIR, feed.file);
   const extractDir = path.join(CACHE_DIR, key);
 

@@ -1,6 +1,6 @@
 # MenetGO
 
-**menetgo.hu** — Modern Hungarian public transit route planner with real-time departure boards, built on GTFS data from BKK and Volánbusz.
+Modern Hungarian public transit route planner with real-time departure boards, built on GTFS data from BKK and Volánbusz.
 
 > This project was **vibe coded** — every line written in real-time through conversation with an AI coding assistant. No prior code, no boilerplate, no scaffolding. Just ideas flowing directly into a working application.
 
