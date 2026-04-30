@@ -1,5 +1,5 @@
 {
-  "name": "utvonal",
+  "name": "menetgo",
   "version": "1.0.0",
   "description": "Modern Hungarian public transit planner using GTFS data",
   "main": "server.js",
