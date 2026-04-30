@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="hu">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Útvonal</title>
+    <link rel="icon" type="image/png" href="./files/favicon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="topbar">
+        <a class="brand" href="#">
+          <span class="brand-mark"><img src="files/favicon.png" width="50" height="50"></span>
+          <span class="brand-text">Útvonal</span>
+        </a>
+
+        <nav class="topnav">
+          <a href="#search">Keresés</a>
+          <a href="#routes">Népszerű utak</a>
+          <a href="#board">Indulások</a>
+        </nav>
+
+      </header>
+
+      <main>
+        <section class="hero">
+          <div class="hero-copy">
+            <p class="eyebrow">Gyors útvonaltervezés országszerte</p>
+            <h1>Tervezd meg az utad másodpercek alatt.</h1>
+            <p class="hero-text">
+              Keress busz-, vonat- és helyi közlekedési kapcsolatokat egyetlen
+              egyszerű keresőből. Átlátható indulások, gyors váltás és mobilbarát
+              kezelés.
+            </p>
+
+            <div class="hero-pills">
+              <span>Vonat</span>
+              <span>Busz</span>
+              <span>HÉV</span>
+              <span>Villamos</span>
+            </div>
+          </div>
+
+          <section class="search-card" id="search">
+            <div class="search-tabs" role="tablist" aria-label="Keresési mód">
+              <button class="tab active" type="button">Utazástervező</button>
+              <button class="tab" type="button">Megálló indulások</button>
+            </div>
+
+            <form class="trip-form" id="trip-form">
+              <label class="input-label">
+                <span>Honnan</span>
+                <div class="input-wrapper">
+                  <input type="text" id="from-input" placeholder="Írd be az induló állomást..." autocomplete="off" />
+                  <div class="autocomplete-dropdown" id="from-dropdown"></div>
+                </div>
+              </label>
+
+              <button class="swap-button" type="button" aria-label="Csere">
+                ⇅
+              </button>
+
+              <label class="input-label">
+                <span>Hová</span>
+                <div class="input-wrapper">
+                  <input type="text" id="to-input" placeholder="Írd be a cél állomást..." autocomplete="off" />
+                  <div class="autocomplete-dropdown" id="to-dropdown"></div>
+                </div>
+              </label>
+
+              <div class="datetime-row">
+                <label>
+                  <span>Dátum</span>
+                  <div class="date-input-wrapper">
+                    <input type="date" id="date-input" />
+                    <label class="whole-day-inline" id="whole-day-label">
+                      <input type="checkbox" id="whole-day-mode" />
+                      <span>Egész nap</span>
+                    </label>
+                  </div>
+                </label>
+
+                <label id="time-label">
+                  <span>Idő</span>
+                  <input type="time" id="time-input" />
+                </label>
+              </div>
+
+              <div class="options-row">
+                <label class="chip-option">
+                  <input type="radio" name="direction" value="departure" checked />
+                  <span>Indulás szerint</span>
+                </label>
+                <label class="chip-option">
+                  <input type="radio" name="direction" value="arrival" />
+                  <span>Érkezés szerint</span>
+                </label>
+                <label class="chip-option">
+                  <input type="checkbox" id="allow-transfers" checked />
+                  <span>Átszállással is</span>
+                </label>
+              </div>
+
+              <button class="primary-button" type="submit" id="search-button">
+                <span class="button-text">Keresés indítása</span>
+                <span class="button-loader" style="display:none">
+                  <span class="spinner"></span>
+                  Keresés...
+                </span>
+              </button>
+            </form>
+          </section>
+        </section>
+
+        <section class="results-container" id="results-container" style="display:none">
+          <div class="results-header">
+            <h2 id="results-title">Találatok</h2>
+            <button class="ghost-button" id="back-button">← Új keresés</button>
+          </div>
+          <div class="results-list" id="results-list"></div>
+        </section>
+
+        <section class="summary-strip">
+          <article>
+            <strong>1 240+</strong>
+            <span>település</span>
+          </article>
+          <article>
+            <strong>Valós idejű</strong>
+            <span>indulási adatok</span>
+          </article>
+          <article>
+            <strong>Egyszerű</strong>
+            <span>mobilos használat</span>
+          </article>
+        </section>
+
+        <section class="content-grid">
+          <section class="panel routes-panel" id="routes">
+            <div class="section-heading">
+              <div class="heading-group">
+                <p class="eyebrow">Gyors választás</p>
+                <h2>Legkeresettebb utaid</h2>
+              </div>
+              <a href="#" title="Előzmények törlése">Törlés</a>
+            </div>
+
+            <div class="route-list">
+            </div>
+          </section>
+
+          <section class="panel board-panel" id="board">
+            <div class="section-heading">
+              <div class="heading-group">
+                <p class="eyebrow">Élő tábla</p>
+                <h2>Következő indulások</h2>
+              </div>
+              <a href="#">Frissítés</a>
+            </div>
+
+            <div class="board-list">
+            </div>
+          </section>
+        </section>
+      </main>
+    </div>
+
+    <script>
+      (function() {
+        let version = 0;
+        setInterval(async () => {
+          try {
+            const res = await fetch('/api/version');
+            const data = await res.json();
+            if (version > 0 && data.version !== version) {
+              window.location.reload();
+            }
+            version = data.version;
+          } catch(e) {}
+        }, 1000);
+      })();
+    </script>
+    <script src="./script.js"></script>
+  </body>
+</html>
